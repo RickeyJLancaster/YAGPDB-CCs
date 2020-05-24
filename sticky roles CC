@@ -1,0 +1,21 @@
+// CC 1:
+//  Trigger: Regex `.*`
+
+{{$roles := .Member.Roles}}
+{{$data := (dbGet 69420 "stickyroles").Value}}
+{{$data_converted := sdict $data}}
+
+{{if ($data_converted.Get (toString .User.ID))}}
+    {{$retrieved_roles:= ($data_converted.Get (toString .User.ID))}}
+    {{$isequal := false}}
+    {{if eq (len $roles) (len $retrieved_roles)}}
+        {{range $inx, $role := $roles}}{{if eq (index $retrieved_roles $inx) $role}}{{$isequal = true}}{{end}}{{end}}
+        {{if not $isequal}}
+            {{dbSet 69420 "stickyroles" (sdict (toString .User.ID) $roles)}}
+        {{end}}
+    {{else}}
+        {{dbSet 69420 "stickyroles" (sdict (toString .User.ID) $roles)}}
+    {{end}}
+{{else if not ($data_converted.Get (toString .User.ID))}}
+    {{dbSet 69420 "stickyroles" (sdict (toString .User.ID) $roles)}}
+{{end}}
