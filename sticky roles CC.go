@@ -48,12 +48,23 @@
 {{end}}
 
 // Join Message:
+{{$log_channel_ID := log_channel_ID_Here}}
 {{$data := (dbGet 69420 "stickyroles").Value}}
 {{$data_converted := sdict $data}}
 {{$userdata := $data_converted.Get (toString .User.ID)}}
 {{sleep 1}}
 {{if $userdata}}
+    {{$variable := ""}}
+    {{$counter := 0}}
     {{range $userdata}}
         {{addRoleID .}}
+        {{$counter = add 1 $counter}}
+        {{$variable = (print $variable "\n**" $counter ":** <@&" . ">")}}
     {{end}}
+    {{sendMessage $log_channel_ID (cembed
+    "author" (sdict "name" (print .User.String " (" .User.ID ")") "icon_url" (print "https://cdn.discordapp.com/avatars/" (toString .User.ID) "/" .User.Avatar ".png"))
+    "title" "Sticky Roles Given:"
+    "description" (print $variable)
+    "color" 3394422
+    )}}
 {{end}}
