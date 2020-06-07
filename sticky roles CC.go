@@ -1,5 +1,10 @@
-//  CC:
-//  Trigger: Regex `.*`
+{{/*
+
+CC
+Trigger Type: `Regex`   |   Trigger: `.*`
+
+*/}}
+
 
 {{if not (dbGet .User.ID "cooldown_stickyroles")}}
     {{dbSetExpire .User.ID "cooldown_stickyroles" "cooldown" 7200}}
@@ -33,7 +38,12 @@
     {{end}}
 {{end}}
 
-// Kick DM and Ban DM
+
+
+
+{{/*  Kick DM and Ban DM */}}
+
+
 {{dbSetExpire .User.ID "ban_kick" 1 3600}}
 
 // Leave Message:
@@ -47,7 +57,9 @@
     {{end}}
 {{end}}
 
-// Join Message:
+
+{{/*  // Join Message: */}}
+
 {{$log_channel_ID := log_channel_ID_Here}}
 {{$data := (dbGet 69420 "stickyroles").Value}}
 {{$data_converted := sdict $data}}
