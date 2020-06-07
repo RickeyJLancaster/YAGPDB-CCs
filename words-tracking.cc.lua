@@ -1,10 +1,12 @@
-{{/*  ->    Words Tracking Command. Track messages from all the server and send in logs channel.   <-    */}}
-{{/*  ->                   To add terms replace the examples in (word1|word2|word3).               <-    */}}
-{{/*  ->                  The (?i) at the beggining make the tracking case insensitive             <-    */}}
+{{/*
+        Words Tracking Command. Track messages from all the server and send in logs channel.
+                   To add terms replace the examples in (word1|word2|word3).
+                  The (?i) at the beggining make the tracking case insensitive
+                            Trigger Type: Regex      |      Trigger: (?)
+*/}}
 
-{{/*  ->                            Trigger Type: Regex      |      Trigger: (?)                   <-    */}}
 
-{{$logchannel := 448887475083935765}}
+{{$logchannel := Channel-ID-Here}}
 {{$wordslist := `(?i)(word1|word2|word3|word4)`}}
 
 {{if reFind $wordslist .StrippedMsg}}
