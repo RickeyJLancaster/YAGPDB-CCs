@@ -1,13 +1,13 @@
-{{/*  ->    DogFact+DogImage and CatFact+CatImage Commands      <-    */}}
-{{/*  ->     To avoid duplication of the response disable       <-    */}}
-{{/*  ->       the original CatFact and DogFact commands        <-    */}}
-{{/*  ->     on Core > Command Settings > Command Override      <-    */}}
+{{/*
+DogFact+DogImage and CatFact+CatImage Commands
+To avoid duplication of the response disable the original CatFact and DogFact commands on Core > Command Settings > Command Override
 
-{{/*  ->     Trigger Type: Regex                                <-    */}}
-{{/*  ->     Trigger: ^-(dog|doggo|dogfact|cat|kitten|catfact)  <-    */}}
-
+Trigger Type: Regex
+Trigger: ^-(dog|doggo|dogfact|cat|kitten|catfact)
+*/}}
 
 {{if (reFind "(dog|doggo|dogfact)" .Cmd)}}
+    
     {{$title := "Dog Fact:"}}
     {{$fact := (exec "dogfact")}}
     {{$x := randInt 1000}}
@@ -15,7 +15,9 @@
     {{$footer_img:= (joinStr "" "https://cdn.discordapp.com/avatars/" (toString .User.ID) "/" .User.Avatar ".png")}}
     {{$footer_txt := (joinStr " " "Doggo requested by" .User.Username)}}
     {{sendMessage nil (cembed "title" $title "description" $fact "image" (sdict "url" $link) "footer" (sdict "text" $footer_txt "icon_url" $footer_img))}}
+
 {{else if (reFind "(cat|kitten|catfact)" .Cmd)}}
+    
     {{$title := "Cat Fact:"}}
     {{$fact := (exec "catfact")}}
     {{$h := randInt 300 500}}
@@ -25,4 +27,5 @@
     {{$footer_img:= (joinStr "" "https://cdn.discordapp.com/avatars/" (toString .User.ID) "/" .User.Avatar ".png")}}
     {{$footer_txt := (joinStr " " "Kitten requested by" .User.Username)}}
     {{sendMessage nil (cembed "title" $title "description" $fact "image" (sdict "url" $link) "footer" (sdict "text" $footer_txt "icon_url" $footer_img))}}
-{{else}}{{end}}
+
+{{end}}
